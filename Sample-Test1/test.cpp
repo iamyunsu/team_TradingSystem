@@ -2,7 +2,7 @@
 #include <string>
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
-#include "../team_TradingSystem/StockAdapter.cpp"
+#include "../team_TradingSystem/AutoTradingSystem.cpp"
 
 using namespace testing;
 
@@ -158,4 +158,16 @@ TEST(testTradingSystem, 키워에서_buyNiceTiming_성공) {
 
 TEST(testTradingSystem, 네모에서_sellNiceTiming_성공) {
 	EXPECT_EQ(1, 1);
+}
+
+TEST(testTradingSystem, 증권사_선택_키워) {
+	AutoTradingSystem autoTrading;
+	NemoStockAdapter nemoStock;
+	autoTrading.selectStockBrocker(&nemoStock);
+}
+
+TEST(testTradingSystem, 증권사_선택_네모) {
+	AutoTradingSystem autoTrading;
+	KiwerStockAdapter kiwerStock;
+	autoTrading.selectStockBrocker(&kiwerStock);
 }
