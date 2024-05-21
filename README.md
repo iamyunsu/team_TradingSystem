@@ -18,6 +18,6 @@ getPrice(code) - 오푸르뫼
 
 selectStockBrocker
 
-buyNiceTiming( code, price)
+buyNiceTiming( code, price) - 이상준
 
-sellNiceTiming( code, price)
+sellNiceTiming( code, price) - 이상준
