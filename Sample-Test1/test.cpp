@@ -164,14 +164,6 @@ TEST(testTradingSystem, 네모에서_getPrice_성공) {
 	EXPECT_THAT(api.getMarketPrice("SEC", 10), 5300);
 }
 
-TEST(testTradingSystem, 키워에서_buyNiceTiming_성공) {
-	EXPECT_EQ(1, 1);
-}
-
-TEST(testTradingSystem, 네모에서_sellNiceTiming_성공) {
-	EXPECT_EQ(1, 1);
-}
-
 TEST(testTradingSystem, 증권사_선택_키워) {
 	AutoTradingSystem autoTrading;
 	NemoStockAdapter nemoStock;
@@ -184,7 +176,7 @@ TEST(testTradingSystem, 증권사_선택_네모) {
 	autoTrading.selectStockBrocker(&kiwerStock);
 }
 
-TEST(testTradingSystem, 증권사_선택_네모_buyNiceTiming) {
+TEST(testTradingSystem, buyNiceTiming_성공) {
 	AutoTradingSystem autoTrading;
 	MockDriver driver;
 	autoTrading.selectStockBrocker(&driver);
@@ -197,6 +189,26 @@ TEST(testTradingSystem, 증권사_선택_네모_buyNiceTiming) {
 	EXPECT_CALL(driver, buy)
 		.Times(1);
 
-	//system.buyNiceTiming();
-
+	AutoTradingSystem system{};
+	system.selectStockBrocker(&driver);
+	system.buyNiceTiming("SEC", 3000);
 }
+
+TEST(testTradingSystem, sellNiceTiming_성공) {
+	AutoTradingSystem autoTrading;
+	MockDriver driver;
+	autoTrading.selectStockBrocker(&driver);
+
+	EXPECT_CALL(driver, getPrice)
+		.WillOnce(Return(150))
+		.WillOnce(Return(120))
+		.WillOnce(Return(100));
+
+	EXPECT_CALL(driver, sell)
+		.Times(1);
+
+	AutoTradingSystem system{};
+	system.selectStockBrocker(&driver);
+	system.sellNiceTiming("SEC", 3000);
+}
+
