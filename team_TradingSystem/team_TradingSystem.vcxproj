@@ -130,7 +130,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AutoTrading.cpp" />
+    <ClCompile Include="StockerBrocker.cpp" />
     <ClCompile Include="KiwerAPI.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="NemoAPI.cpp" />
