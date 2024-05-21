@@ -1,5 +1,7 @@
 ﻿#include <iostream>
-#
+#include "../team_TradingSystem/KiwerAPI.cpp"
+#include "../team_TradingSystem/NemoAPI.cpp"
+
 using namespace std;
 
 class StockAdapter {
@@ -27,6 +29,9 @@ public:
 	{
 
 	}
+private:
+	NemoAPI api;
+
 };
 
 class KiwerStockAdapter : public StockAdapter {
@@ -47,4 +52,8 @@ public:
 	{
 
 	}
+
+private:
+	KiwerAPI api;
+
 };
