@@ -16,7 +16,7 @@ sell(code, price, quantity)
 
 getPrice(code) - 오푸르뫼
 
-selectStockBrocker
+selectStockBrocker - 심윤섭
 
 buyNiceTiming( code, price) - 이상준
 
