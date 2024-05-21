@@ -2,7 +2,7 @@
 TradingSystem TDD KATA
 
 # TODO
-adapter 패턴 구현
+adapter 패턴 구현 - 김태홍
 
 TC 작성 - 김연수
 
