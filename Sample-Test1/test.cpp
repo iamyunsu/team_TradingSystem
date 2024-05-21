@@ -2,7 +2,7 @@
 #include <string>
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
-#include "../team_TradingSystem/StockAdapter.cpp"
+#include "../team_TradingSystem/AutoTradingSystem.cpp"
 
 using namespace testing;
 
@@ -23,28 +23,25 @@ TEST(testTradingSystem, 증권사_키워_로그인_성공) {
 
 	std::streambuf* oldCoutStreamBuf = std::cout.rdbuf();
 	std::ostringstream strCout;
-	std::cout.rdbuf(strCout.rdbuf());
 
-	api.login(id, pw);
-
-	std::cout.rdbuf(oldCoutStreamBuf);
+	string id = "AAA";
+	string pw = "BBB";
+};
+TEST_F(TestTradingSystemFixture, 증권사_키워_로그인_성공) {
+	KiwerStockAdapter adapter;
+	AutoTradingSystem system{};
+	system.selectStockBrocker(&adapter);
+	system.login(id, pw);
 
 	string expected = id + " login success\n";
 	EXPECT_THAT(strCout.str(), testing::StrEq(expected));
 }
 
-TEST(testTradingSystem, 증권사_네모_로그인_성공) {
-	NemoAPI api;
-	string id = "AAA";
-	string pw = "BBB";
-
-	std::streambuf* oldCoutStreamBuf = std::cout.rdbuf();
-	std::ostringstream strCout;
-	std::cout.rdbuf(strCout.rdbuf());
-
-	api.certification(id, pw);
-
-	std::cout.rdbuf(oldCoutStreamBuf);
+TEST_F(TestTradingSystemFixture, 증권사_네모_로그인_성공) {
+	NemoStockAdapter adapter;
+	AutoTradingSystem system{};
+	system.selectStockBrocker(&adapter);
+	system.login(id, pw);
 
 	string expected = "[NEMO]" + id + " login GOOD\n";
 	EXPECT_THAT(strCout.str(), testing::StrEq(expected));
@@ -173,4 +170,16 @@ TEST(testTradingSystem, 키워에서_buyNiceTiming_성공) {
 
 TEST(testTradingSystem, 네모에서_sellNiceTiming_성공) {
 	EXPECT_EQ(1, 1);
+}
+
+TEST(testTradingSystem, 증권사_선택_키워) {
+	AutoTradingSystem autoTrading;
+	NemoStockAdapter nemoStock;
+	autoTrading.selectStockBrocker(&nemoStock);
+}
+
+TEST(testTradingSystem, 증권사_선택_네모) {
+	AutoTradingSystem autoTrading;
+	KiwerStockAdapter kiwerStock;
+	autoTrading.selectStockBrocker(&kiwerStock);
 }
