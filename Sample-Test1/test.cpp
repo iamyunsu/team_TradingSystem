@@ -29,7 +29,7 @@ public:
 };
 TEST_F(TestTradingSystemFixture, 증권사_키워_로그인_성공) {
 
-	system.selectStockBrocker(&nemoStock);
+	system.selectStockBrocker(&kiwerStock);
 	system.login(id, pw);
 
 	string expected = id + " login success\n";
@@ -37,7 +37,7 @@ TEST_F(TestTradingSystemFixture, 증권사_키워_로그인_성공) {
 }
 
 TEST_F(TestTradingSystemFixture, 증권사_네모_로그인_성공) {
-	system.selectStockBrocker(&kiwerStock);
+	system.selectStockBrocker(&nemoStock);
 	system.login(id, pw);
 
 	string expected = "[NEMO]" + id + " login GOOD\n";
