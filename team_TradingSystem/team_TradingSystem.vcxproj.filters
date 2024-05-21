@@ -27,7 +27,7 @@
     <ClCompile Include="KiwerAPI.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="AutoTrading.cpp">
+    <ClCompile Include="StockerBrocker.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="StockAdapter.cpp">
