@@ -16,17 +16,23 @@ public:
 	MOCK_METHOD((int), getMarketPrice, (string , int ), ());
 };
 
-TEST(testTradingSystem, 증권사_키워_로그인_성공) {
-	KiwerAPI api;
-	string id = "AAA";
-	string pw = "BBB";
+class TestTradingSystemFixture : public Test {
+	// Test을(를) 통해 상속됨
+	void SetUp() override {
+		std::streambuf* oldCoutStreamBuf = std::cout.rdbuf();
+		std::cout.rdbuf(strCout.rdbuf());
+	}
+	void TearDown() override {
+		std::cout.rdbuf(oldCoutStreamBuf);
+	}
 
-	std::streambuf* oldCoutStreamBuf = std::cout.rdbuf();
+public:
+	std::streambuf* oldCoutStreamBuf;
 	std::ostringstream strCout;
-
 	string id = "AAA";
 	string pw = "BBB";
 };
+
 TEST_F(TestTradingSystemFixture, 증권사_키워_로그인_성공) {
 	KiwerStockAdapter adapter;
 	AutoTradingSystem system{};
