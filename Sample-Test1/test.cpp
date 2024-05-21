@@ -6,6 +6,16 @@
 
 using namespace testing;
 
+class  KiwerMock : public KiwerAPI {
+public:
+	MOCK_METHOD((int), currentPrice, (string ), ());
+};
+
+class  NemoMock : public NemoAPI {
+public:
+	MOCK_METHOD((int), getMarketPrice, (string , int ), ());
+};
+
 TEST(testTradingSystem, 증권사_키워_로그인_성공) {
 	KiwerAPI api;
 	string id = "AAA";
@@ -133,22 +143,27 @@ TEST(testTradingSystem, 네모에서_sell_성공) {
 }
 
 TEST(testTradingSystem, 키워에서_getPrice_성공) {
-	KiwerAPI api;
+
+	KiwerMock api;
 	string id = "AAA";
 	string pw = "BBB";
 
 	api.login(id, pw);
+	EXPECT_CALL(api, currentPrice("SEC"))
+		.WillRepeatedly(Return(5400));
 
 	EXPECT_EQ(api.currentPrice("SEC"), 5400);
 }
 
 TEST(testTradingSystem, 네모에서_getPrice_성공) {
-	NemoAPI api;
+	NemoMock api;
 	string id = "AAA";
 	string pw = "BBB";
 
 	api.certification(id, pw);
-	
+	EXPECT_CALL(api, getMarketPrice("SEC",10))
+		.WillRepeatedly(Return(5300));
+
 	EXPECT_THAT(api.getMarketPrice("SEC", 10), 5300);
 }
 
