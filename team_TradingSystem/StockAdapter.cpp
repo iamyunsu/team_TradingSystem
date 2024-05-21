@@ -5,6 +5,7 @@
 using namespace std;
 
 class StockAdapter {
+public:
 	virtual void login(string id, string pass) = 0;
 	virtual void buy(string code, int price, int quantity) = 0;
 	virtual void sell(string code, int price, int quantity) = 0;
