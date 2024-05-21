@@ -31,11 +31,15 @@ public:
 
 	string id = "AAA";
 	string pw = "BBB";
+	string stock_code = "fake_code";
+
+	KiwerStockAdapter kiwerStock;
+	NemoStockAdapter nemoStock;
+	AutoTradingSystem system{};
 };
 TEST_F(TestTradingSystemFixture, 증권사_키워_로그인_성공) {
-	KiwerStockAdapter adapter;
-	AutoTradingSystem system{};
-	system.selectStockBrocker(&adapter);
+
+	system.selectStockBrocker(&kiwerStock);
 	system.login(id, pw);
 
 	string expected = id + " login success\n";
@@ -43,9 +47,7 @@ TEST_F(TestTradingSystemFixture, 증권사_키워_로그인_성공) {
 }
 
 TEST_F(TestTradingSystemFixture, 증권사_네모_로그인_성공) {
-	NemoStockAdapter adapter;
-	AutoTradingSystem system{};
-	system.selectStockBrocker(&adapter);
+	system.selectStockBrocker(&nemoStock);
 	system.login(id, pw);
 
 	string expected = "[NEMO]" + id + " login GOOD\n";
@@ -163,15 +165,11 @@ TEST_F(TestTradingSystemFixture, 네모에서_sellNiceTiming_성공) {
 }
 
 TEST_F(TestTradingSystemFixture, 증권사_선택_키워) {
-	AutoTradingSystem autoTrading;
-	NemoStockAdapter nemoStock;
-	autoTrading.selectStockBrocker(&nemoStock);
+	system.selectStockBrocker(&kiwerStock);
 }
 
 TEST_F(TestTradingSystemFixture, 증권사_선택_네모) {
-	AutoTradingSystem autoTrading;
-	KiwerStockAdapter kiwerStock;
-	autoTrading.selectStockBrocker(&kiwerStock);
+	system.selectStockBrocker(&nemoStock);
 }
 
 TEST_F(TestTradingSystemFixture, 증권사_선택_네모_buyNiceTiming) {
