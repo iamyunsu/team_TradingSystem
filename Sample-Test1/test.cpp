@@ -188,3 +188,33 @@ TEST_F(TestTradingSystemFixture, 증권사_선택_네모_buyNiceTiming) {
 	//system.buyNiceTiming();
 
 }
+
+TEST_F(TestTradingSystemFixture, MockStockerBrocker_buy_성공) {
+	MockDriver mMockStockerBroker;
+	system.selectStockBrocker(&mMockStockerBroker);
+	
+	EXPECT_CALL(mMockStockerBroker, getPrice("fake_code"))
+		.Times(1)
+		.WillOnce(Return(1000));
+
+	int price = system.getPrice("fake_code");
+	EXPECT_CALL(mMockStockerBroker, buy("fake_code", 1000, 1))
+		.Times(1);
+
+	system.buy("fake_code", 1000, 1);
+}
+
+TEST_F(TestTradingSystemFixture, MockStockerBrocker_sell_성공) {
+	MockDriver mMockStockerBroker;
+	system.selectStockBrocker(&mMockStockerBroker);
+
+	EXPECT_CALL(mMockStockerBroker, getPrice("fake_code"))
+		.Times(1)
+		.WillOnce(Return(1000));
+
+	int price = system.getPrice("fake_code");
+	EXPECT_CALL(mMockStockerBroker, sell("fake_code", 1000, 1))
+		.Times(1);
+
+	system.sell("fake_code", 1000, 1);
+}
