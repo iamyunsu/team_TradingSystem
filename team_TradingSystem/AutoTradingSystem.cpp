@@ -10,13 +10,13 @@ public:
 	void login(string id, string pass) {
 		stockBroker->login(id, pass);
 	}
-	void buy(int code, int price, int quantity) {
+	void buy(string code, int price, int quantity) {
 		stockBroker->buy(code, price, quantity);
 	}
-	void sell(int code, int price, int quantity) {
+	void sell(string code, int price, int quantity) {
 		stockBroker->sell(code, price, quantity);
 	}
-	int getPrice(int code) {
+	int getPrice(string code) {
 		stockBroker->getPrice(code);
 	}
 
