@@ -31,6 +31,7 @@ public:
 
 	string id = "AAA";
 	string pw = "BBB";
+	string stock_code = "fake_code";
 
 	KiwerStockAdapter kiwerStock;
 	NemoStockAdapter nemoStock;
