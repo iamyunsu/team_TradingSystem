@@ -2,39 +2,42 @@
 #include <string>
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
-#include "../team_TradingSystem/StockAdapter.cpp"
+#include "../team_TradingSystem/AutoTradingSystem.cpp"
 
 using namespace testing;
 
-TEST(testTradingSystem, 증권사_키워_로그인_성공) {
-	KiwerAPI api;
+class TestTradingSystemFixture : public Test {
+	// Test을(를) 통해 상속됨
+	void SetUp() override {
+		std::streambuf* oldCoutStreamBuf = std::cout.rdbuf();
+		std::cout.rdbuf(strCout.rdbuf());
+	}
+	void TearDown() override {
+		std::cout.rdbuf(oldCoutStreamBuf);
+	}
+
+public:
+	std::streambuf* oldCoutStreamBuf;
+	std::ostringstream strCout;
+
 	string id = "AAA";
 	string pw = "BBB";
-
-	std::streambuf* oldCoutStreamBuf = std::cout.rdbuf();
-	std::ostringstream strCout;
-	std::cout.rdbuf(strCout.rdbuf());
-
-	api.login(id, pw);
-
-	std::cout.rdbuf(oldCoutStreamBuf);
+};
+TEST_F(TestTradingSystemFixture, 증권사_키워_로그인_성공) {
+	KiwerStockAdapter adapter;
+	AutoTradingSystem system{};
+	system.selectStockBrocker(&adapter);
+	system.login(id, pw);
 
 	string expected = id + " login success\n";
 	EXPECT_THAT(strCout.str(), testing::StrEq(expected));
 }
 
-TEST(testTradingSystem, 증권사_네모_로그인_성공) {
-	NemoAPI api;
-	string id = "AAA";
-	string pw = "BBB";
-
-	std::streambuf* oldCoutStreamBuf = std::cout.rdbuf();
-	std::ostringstream strCout;
-	std::cout.rdbuf(strCout.rdbuf());
-
-	api.certification(id, pw);
-
-	std::cout.rdbuf(oldCoutStreamBuf);
+TEST_F(TestTradingSystemFixture, 증권사_네모_로그인_성공) {
+	NemoStockAdapter adapter;
+	AutoTradingSystem system{};
+	system.selectStockBrocker(&adapter);
+	system.login(id, pw);
 
 	string expected = "[NEMO]" + id + " login GOOD\n";
 	EXPECT_THAT(strCout.str(), testing::StrEq(expected));
