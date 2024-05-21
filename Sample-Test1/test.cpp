@@ -12,7 +12,7 @@ public:
 	MOCK_METHOD(void, login, (string, string), (override));
 	MOCK_METHOD(void, buy, (string, int, int), (override));
 	MOCK_METHOD(void, sell, (string, int, int), (override));
-	MOCK_METHOD(int, getPrice, (string), (override));
+	MOCK_METHOD(int, getPrice, (string, int), (override));
 };
 
 class TestTradingSystemFixture : public Test {
@@ -124,7 +124,6 @@ TEST_F(TestTradingSystemFixture, 키워에서_sell_성공) {
 TEST_F(TestTradingSystemFixture, 네모에서_sell_성공) {
 	NemoAPI api;
 
-
 	api.certification(id, pw);
 
 	std::streambuf* oldCoutStreamBuf = std::cout.rdbuf();
@@ -148,21 +147,15 @@ TEST_F(TestTradingSystemFixture, 키워에서_getPrice_성공) {
 }
 
 TEST_F(TestTradingSystemFixture, 네모에서_getPrice_성공) {
-	NemoAPI api;
+	AutoTradingSystem autoTrading;
+	KiwerStockAdapter kiwerStock;
+	autoTrading.selectStockBrocker(&kiwerStock);
 
-
-	api.certification(id, pw);
+	autoTrading.login(id, pw);
 	
-	EXPECT_THAT(api.getMarketPrice("SEC", 10), 5300);
+	EXPECT_THAT(autoTrading.getPrice("SEC", 10), 5300);
 }
 
-TEST_F(TestTradingSystemFixture, 키워에서_buyNiceTiming_성공) {
-	EXPECT_EQ(1, 1);
-}
-
-TEST_F(TestTradingSystemFixture, 네모에서_sellNiceTiming_성공) {
-	EXPECT_EQ(1, 1);
-}
 
 TEST_F(TestTradingSystemFixture, 증권사_선택_키워) {
 	system.selectStockBrocker(&kiwerStock);
@@ -172,7 +165,7 @@ TEST_F(TestTradingSystemFixture, 증권사_선택_네모) {
 	system.selectStockBrocker(&nemoStock);
 }
 
-TEST_F(TestTradingSystemFixture, 증권사_선택_네모_buyNiceTiming) {
+TEST(testTradingSystem, buyNiceTiming_성공) {
 	AutoTradingSystem autoTrading;
 	MockDriver driver;
 	autoTrading.selectStockBrocker(&driver);
@@ -185,8 +178,27 @@ TEST_F(TestTradingSystemFixture, 증권사_선택_네모_buyNiceTiming) {
 	EXPECT_CALL(driver, buy)
 		.Times(1);
 
-	//system.buyNiceTiming();
+	AutoTradingSystem system{};
+	system.selectStockBrocker(&driver);
+	system.buyNiceTiming("SEC", 3000);
+}
 
+TEST(testTradingSystem, sellNiceTiming_성공) {
+	AutoTradingSystem autoTrading;
+	MockDriver driver;
+	autoTrading.selectStockBrocker(&driver);
+
+	EXPECT_CALL(driver, getPrice)
+		.WillOnce(Return(150))
+		.WillOnce(Return(120))
+		.WillOnce(Return(100));
+
+	EXPECT_CALL(driver, sell)
+		.Times(1);
+
+	AutoTradingSystem system{};
+	system.selectStockBrocker(&driver);
+	system.sellNiceTiming("SEC", 3000);
 }
 
 TEST_F(TestTradingSystemFixture, MockStockerBrocker_buy_성공) {
