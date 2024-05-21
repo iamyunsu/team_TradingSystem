@@ -52,26 +52,24 @@ TEST_F(TestTradingSystemFixture, 증권사_네모_로그인_성공) {
 	EXPECT_THAT(strCout.str(), testing::StrEq(expected));
 }
 
-TEST(testTradingSystem, 증권사_선택하지않고_로그인하면_실패) {
+TEST_F(TestTradingSystemFixture, 증권사_선택하지않고_로그인하면_실패) {
 	EXPECT_EQ(1, 1);
 }
 
-TEST(testTradingSystem, 증권사_선택하고_로그인하지않고_buy하면_실패) {
+TEST_F(TestTradingSystemFixture, 증권사_선택하고_로그인하지않고_buy하면_실패) {
 	EXPECT_EQ(1, 1);
 }
 
-TEST(testTradingSystem, 증권사_선택하고_로그인하지않고_sell하면_실패) {
+TEST_F(TestTradingSystemFixture, 증권사_선택하고_로그인하지않고_sell하면_실패) {
 	EXPECT_EQ(1, 1);
 }
 
-TEST(testTradingSystem, 증권사_선택하고_로그인하지않고_getPrice하면_실패) {
+TEST_F(TestTradingSystemFixture, 증권사_선택하고_로그인하지않고_getPrice하면_실패) {
 	EXPECT_EQ(1, 1);
 }
 
-TEST(testTradingSystem, 키워에서_buy_성공) {
+TEST_F(TestTradingSystemFixture, 키워에서_buy_성공) {
 	KiwerAPI api;
-	string id = "AAA";
-	string pw = "BBB";
 
 	api.login(id, pw);
 
@@ -87,10 +85,8 @@ TEST(testTradingSystem, 키워에서_buy_성공) {
 	EXPECT_THAT(strCout.str(), StrEq(expected));
 }
 
-TEST(testTradingSystem, 네모에서_buy_성공) {
+TEST_F(TestTradingSystemFixture, 네모에서_buy_성공) {
 	NemoAPI api;
-	string id = "AAA";
-	string pw = "BBB";
 
 	api.certification(id, pw);
 
@@ -106,10 +102,8 @@ TEST(testTradingSystem, 네모에서_buy_성공) {
 	EXPECT_THAT(strCout.str(), StrEq(expected));
 }
 
-TEST(testTradingSystem, 키워에서_sell_성공) {
+TEST_F(TestTradingSystemFixture, 키워에서_sell_성공) {
 	KiwerAPI api;
-	string id = "AAA";
-	string pw = "BBB";
 
 	api.login(id, pw);
 
@@ -125,10 +119,9 @@ TEST(testTradingSystem, 키워에서_sell_성공) {
 	EXPECT_THAT(strCout.str(), StrEq(expected));
 }
 
-TEST(testTradingSystem, 네모에서_sell_성공) {
+TEST_F(TestTradingSystemFixture, 네모에서_sell_성공) {
 	NemoAPI api;
-	string id = "AAA";
-	string pw = "BBB";
+
 
 	api.certification(id, pw);
 
@@ -144,47 +137,44 @@ TEST(testTradingSystem, 네모에서_sell_성공) {
 	EXPECT_THAT(strCout.str(), StrEq(expected));
 }
 
-TEST(testTradingSystem, 키워에서_getPrice_성공) {
+TEST_F(TestTradingSystemFixture, 키워에서_getPrice_성공) {
 	KiwerAPI api;
-	string id = "AAA";
-	string pw = "BBB";
 
 	api.login(id, pw);
 
 	EXPECT_EQ(api.currentPrice("SEC"), 5400);
 }
 
-TEST(testTradingSystem, 네모에서_getPrice_성공) {
+TEST_F(TestTradingSystemFixture, 네모에서_getPrice_성공) {
 	NemoAPI api;
-	string id = "AAA";
-	string pw = "BBB";
+
 
 	api.certification(id, pw);
 	
 	EXPECT_THAT(api.getMarketPrice("SEC", 10), 5300);
 }
 
-TEST(testTradingSystem, 키워에서_buyNiceTiming_성공) {
+TEST_F(TestTradingSystemFixture, 키워에서_buyNiceTiming_성공) {
 	EXPECT_EQ(1, 1);
 }
 
-TEST(testTradingSystem, 네모에서_sellNiceTiming_성공) {
+TEST_F(TestTradingSystemFixture, 네모에서_sellNiceTiming_성공) {
 	EXPECT_EQ(1, 1);
 }
 
-TEST(testTradingSystem, 증권사_선택_키워) {
+TEST_F(TestTradingSystemFixture, 증권사_선택_키워) {
 	AutoTradingSystem autoTrading;
 	NemoStockAdapter nemoStock;
 	autoTrading.selectStockBrocker(&nemoStock);
 }
 
-TEST(testTradingSystem, 증권사_선택_네모) {
+TEST_F(TestTradingSystemFixture, 증권사_선택_네모) {
 	AutoTradingSystem autoTrading;
 	KiwerStockAdapter kiwerStock;
 	autoTrading.selectStockBrocker(&kiwerStock);
 }
 
-TEST(testTradingSystem, 증권사_선택_네모_buyNiceTiming) {
+TEST_F(TestTradingSystemFixture, 증권사_선택_네모_buyNiceTiming) {
 	AutoTradingSystem autoTrading;
 	MockDriver driver;
 	autoTrading.selectStockBrocker(&driver);
