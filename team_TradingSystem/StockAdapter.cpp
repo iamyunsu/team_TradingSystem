@@ -6,26 +6,26 @@ using namespace std;
 
 class StockAdapter {
 	virtual void login(string id, string pass) = 0;
-	virtual void buy(int code, int price, int quantity) = 0;
-	virtual void sell(int code, int price, int quantity) = 0;
-	virtual int getPrice(int code) = 0;
+	virtual void buy(string code, int price, int quantity) = 0;
+	virtual void sell(string code, int price, int quantity) = 0;
+	virtual int getPrice(string code) = 0;
 };
 
 class NemoStockAdapter : public StockAdapter {
 public:
-	void login(string id, string password)
+	void login(string id, string password) override
 	{
 		api.certification(id, password);
 	}
-	void buy(string code, int price, int quantity)
+	void buy(string code, int price, int quantity) override
 	{
 		api.purchasingStock(code, price, quantity);
 	}
-	void sell(string code, int price, int quantity)
+	void sell(string code, int price, int quantity) override
 	{
 		api.sellingStock(code, price, quantity);
 	}
-	int getPrice(string code)
+	int getPrice(string code) override
 	{
 		return api.getMarketPrice(code, 1);
 	}
@@ -36,19 +36,19 @@ private:
 
 class KiwerStockAdapter : public StockAdapter {
 public:
-	void login(string id, string password)
+	void login(string id, string password) override
 	{
 		api.login(id, password);
 	}
-	void buy(string code, int price, int quantity)
+	void buy(string code, int price, int quantity) override
 	{
 		api.buy(code, quantity, price);
 	}
-	void sell(string code, int price, int quantity)
+	void sell(string code, int price, int quantity) override
 	{
 		api.sell(code, quantity, price);
 	}
-	int getPrice(string code)
+	int getPrice(string code) override
 	{
 		return api.currentPrice(code);
 	}
