@@ -17,7 +17,7 @@ public:
 		stockBroker->sell(code, price, quantity);
 	}
 	int getPrice(string code) {
-		stockBroker->getPrice(code);
+		return stockBroker->getPrice(code);
 	}
 
 private:
