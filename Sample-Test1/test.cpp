@@ -6,6 +6,15 @@
 
 using namespace testing;
 
+class MockDriver : public StockAdapter {
+public:
+	// StockAdapter을(를) 통해 상속됨
+	MOCK_METHOD(void, login, (string, string), (override));
+	MOCK_METHOD(void, buy, (string, int, int), (override));
+	MOCK_METHOD(void, sell, (string, int, int), (override));
+	MOCK_METHOD(int, getPrice, (string), (override));
+};
+
 class TestTradingSystemFixture : public Test {
 	// Test을(를) 통해 상속됨
 	void SetUp() override {
@@ -173,4 +182,21 @@ TEST(testTradingSystem, 증권사_선택_네모) {
 	AutoTradingSystem autoTrading;
 	KiwerStockAdapter kiwerStock;
 	autoTrading.selectStockBrocker(&kiwerStock);
+}
+
+TEST(testTradingSystem, 증권사_선택_네모_buyNiceTiming) {
+	AutoTradingSystem autoTrading;
+	MockDriver driver;
+	autoTrading.selectStockBrocker(&driver);
+
+	EXPECT_CALL(driver, getPrice)
+		.WillOnce(Return(100))
+		.WillOnce(Return(120))
+		.WillOnce(Return(150));
+
+	EXPECT_CALL(driver, buy)
+		.Times(1);
+
+	//system.buyNiceTiming();
+
 }
