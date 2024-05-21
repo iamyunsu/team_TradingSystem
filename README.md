@@ -8,13 +8,13 @@ TC 작성 - 김연수
 
 각 기능 구현 
 
-login(id, pass)
+login(id, pass) - 오푸르뫼
 
 buy(code, price, quantity)
 
 sell(code, price, quantity)
 
-getPrice(code)
+getPrice(code) - 오푸르뫼
 
 selectStockBrocker
 
