@@ -133,17 +133,29 @@ TEST(testTradingSystem, 네모에서_sell_성공) {
 }
 
 TEST(testTradingSystem, 키워에서_getPrice_성공) {
-	EXPECT_EQ(1, 1);
+	KiwerAPI api;
+	string id = "AAA";
+	string pw = "BBB";
+
+	api.login(id, pw);
+
+	EXPECT_EQ(api.currentPrice("SEC"), 5400);
 }
 
 TEST(testTradingSystem, 네모에서_getPrice_성공) {
+	NemoAPI api;
+	string id = "AAA";
+	string pw = "BBB";
+
+	api.certification(id, pw);
+	
+	EXPECT_THAT(api.getMarketPrice("SEC", 10), 5300);
+}
+
+TEST(testTradingSystem, 키워에서_buyNiceTiming_성공) {
 	EXPECT_EQ(1, 1);
 }
 
-TEST(testTradingSystem, 키워에서_buyNiceTiming했는데_기준에맞지않아서_예외) {
-	EXPECT_EQ(1, 1);
-}
-
-TEST(testTradingSystem, 네모에서_sellNiceTiming했는데_기준에맞지않아서_예외) {
+TEST(testTradingSystem, 네모에서_sellNiceTiming_성공) {
 	EXPECT_EQ(1, 1);
 }
