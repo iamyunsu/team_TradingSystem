@@ -12,7 +12,7 @@ public:
 	MOCK_METHOD(void, login, (string, string), (override));
 	MOCK_METHOD(void, buy, (string, int, int), (override));
 	MOCK_METHOD(void, sell, (string, int, int), (override));
-	MOCK_METHOD(int, getPrice, (string), (override));
+	MOCK_METHOD(int, getPrice, (string, int), (override));
 };
 
 class TestTradingSystemFixture : public Test {
@@ -122,7 +122,6 @@ TEST_F(TestTradingSystemFixture, 키워에서_sell_성공) {
 TEST_F(TestTradingSystemFixture, 네모에서_sell_성공) {
 	NemoAPI api;
 
-
 	api.certification(id, pw);
 
 	std::streambuf* oldCoutStreamBuf = std::cout.rdbuf();
@@ -146,12 +145,13 @@ TEST_F(TestTradingSystemFixture, 키워에서_getPrice_성공) {
 }
 
 TEST_F(TestTradingSystemFixture, 네모에서_getPrice_성공) {
-	NemoAPI api;
+	AutoTradingSystem autoTrading;
+	KiwerStockAdapter kiwerStock;
+	autoTrading.selectStockBrocker(&kiwerStock);
 
-
-	api.certification(id, pw);
+	autoTrading.login(id, pw);
 	
-	EXPECT_THAT(api.getMarketPrice("SEC", 10), 5300);
+	EXPECT_THAT(autoTrading.getPrice("SEC", 10), 5300);
 }
 
 TEST_F(TestTradingSystemFixture, 키워에서_buyNiceTiming_성공) {

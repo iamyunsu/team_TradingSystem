@@ -16,8 +16,8 @@ public:
 	void sell(string code, int price, int quantity) {
 		stockBroker->sell(code, price, quantity);
 	}
-	int getPrice(string code) {
-		return stockBroker->getPrice(code);
+	int getPrice(string code, int minute = 0) {
+		return stockBroker->getPrice(code, minute);
 	}
 
 private:
