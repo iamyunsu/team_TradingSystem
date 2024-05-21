@@ -16,8 +16,29 @@ public:
 	void sell(string code, int price, int quantity) {
 		stockBroker->sell(code, price, quantity);
 	}
-	int getPrice(string code) {
-		return stockBroker->getPrice(code);
+	int getPrice(string code, int minute = 0) {
+		return stockBroker->getPrice(code, minute);
+	}
+	void buyNiceTiming(string code, int price) {
+		int firstPrice = getPrice(code);
+		int secondPrice = getPrice(code);
+		int thirdPrice = getPrice(code);
+		if (firstPrice >= secondPrice || secondPrice >= thirdPrice) {
+			return;
+		}
+		int quantity = price / thirdPrice;
+		if (quantity > 0) {
+			stockBroker->buy(code, thirdPrice, quantity);
+		}
+	}
+	void sellNiceTiming(string code, int quantity) {
+		int firstPrice = getPrice(code);
+		int secondPrice = getPrice(code);
+		int thirdPrice = getPrice(code);
+		if (firstPrice <= secondPrice || secondPrice <= thirdPrice) {
+			return;
+		}
+		stockBroker->sell(code, thirdPrice, quantity);
 	}
 
 private:

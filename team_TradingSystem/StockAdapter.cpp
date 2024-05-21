@@ -9,7 +9,7 @@ public:
 	virtual void login(string id, string pass) = 0;
 	virtual void buy(string code, int price, int quantity) = 0;
 	virtual void sell(string code, int price, int quantity) = 0;
-	virtual int getPrice(string code) = 0;
+	virtual int getPrice(string code, int minute = 0) = 0;
 };
 
 class NemoStockAdapter : public StockAdapter {
@@ -26,9 +26,9 @@ public:
 	{
 		api.sellingStock(code, price, quantity);
 	}
-	int getPrice(string code) override
+	int getPrice(string code, int minute = 0) override
 	{
-		return api.getMarketPrice(code, 1);
+		return api.getMarketPrice(code, minute);
 	}
 private:
 	NemoAPI api;
@@ -49,7 +49,7 @@ public:
 	{
 		api.sell(code, quantity, price);
 	}
-	int getPrice(string code) override
+	int getPrice(string code, int minute = 0) override
 	{
 		return api.currentPrice(code);
 	}
