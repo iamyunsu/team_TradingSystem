@@ -134,6 +134,7 @@
     <ClCompile Include="KiwerAPI.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="NemoAPI.cpp" />
+    <ClCompile Include="StockAdapter.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
