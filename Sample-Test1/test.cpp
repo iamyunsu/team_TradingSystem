@@ -205,28 +205,28 @@ TEST_F(TestTradingSystemFixture, MockStockerBrocker_buy_성공) {
 	MockDriver mMockStockerBroker;
 	system.selectStockBrocker(&mMockStockerBroker);
 	
-	EXPECT_CALL(mMockStockerBroker, getPrice(stock_code))
+	EXPECT_CALL(mMockStockerBroker, getPrice(stock_code, _))
 		.Times(1)
 		.WillOnce(Return(1000));
 
 	int price = system.getPrice(stock_code);
-	EXPECT_CALL(mMockStockerBroker, buy(stock_code, 1000, 1))
+	EXPECT_CALL(mMockStockerBroker, buy(stock_code, price, 1))
 		.Times(1);
 
-	system.buy(stock_code, 1000, 1);
+	system.buy(stock_code, price, 1);
 }
 
 TEST_F(TestTradingSystemFixture, MockStockerBrocker_sell_성공) {
 	MockDriver mMockStockerBroker;
 	system.selectStockBrocker(&mMockStockerBroker);
 
-	EXPECT_CALL(mMockStockerBroker, getPrice(stock_code))
+	EXPECT_CALL(mMockStockerBroker, getPrice(stock_code, _))
 		.Times(1)
 		.WillOnce(Return(1000));
 
 	int price = system.getPrice(stock_code);
-	EXPECT_CALL(mMockStockerBroker, sell(stock_code, 1000, 1))
+	EXPECT_CALL(mMockStockerBroker, sell(stock_code, price, 1))
 		.Times(1);
 
-	system.sell(stock_code, 1000, 1);
+	system.sell(stock_code, price, 1);
 }
